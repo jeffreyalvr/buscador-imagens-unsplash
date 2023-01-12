@@ -1,0 +1,18 @@
+.image-list {
+  padding: 40px 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.image-list .image-item {
+  height: auto;
+  width: 350px;
+  margin: 10px;
+}
+
+.image-list .image-item img {
+  height: 100%;
+  width: 100%;
+}

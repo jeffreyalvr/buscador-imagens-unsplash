@@ -23,6 +23,14 @@ const Header = ({ text, handleInputChange, handleButtonClick }) => {
         sx={{
           display: "flex",
           justifyContent: "space-between",
+          flexDirection: {
+            xxs: "column",
+            xs: "column",
+            sm: "row",
+            md: "row",
+            lg: "row",
+            xl: "row",
+          },
         }}
       >
         <TextField

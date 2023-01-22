@@ -1,6 +1,6 @@
 import "./styles.css";
 
-const ImageList = ({ term, results }) => {
+const ImageList = ({ results }) => {
   return (
     <div className="image-list">
       {!results

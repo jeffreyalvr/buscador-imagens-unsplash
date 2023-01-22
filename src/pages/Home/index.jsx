@@ -9,7 +9,6 @@ import ImageList from "../../components/ImageList";
 
 const Home = () => {
   const [text, setText] = useState("");
-  const [term, setTerm] = useState("");
   const [results, setResults] = useState([]);
 
   const handleInputChange = (e) => {
@@ -18,10 +17,9 @@ const Home = () => {
 
   const handleButtonClick = () => {
     if (!text) return;
-    setTerm(text);
 
     api
-      .get(`/photos?query=${term}`)
+      .get(`/photos?query=${text}`)
       .then((response) => setResults(response.data.results))
       .catch((err) => console.error(err));
   };
@@ -33,7 +31,7 @@ const Home = () => {
         handleInputChange={handleInputChange}
         handleButtonClick={handleButtonClick}
       />
-      <ImageList term={term} results={results} />
+      <ImageList results={results} />
     </Container>
   );
 };

@@ -11,7 +11,12 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import InputAdornment from "@mui/material/InputAdornment";
 
-const Header = ({ text, handleInputChange, handleButtonClick }) => {
+const Header = ({
+  text,
+  handleInputChange,
+  handleButtonClick,
+  handleKeyDown,
+}) => {
   return (
     <header>
       <div className="logo">
@@ -46,6 +51,7 @@ const Header = ({ text, handleInputChange, handleButtonClick }) => {
           sx={{ flexGrow: 4 }}
           value={text}
           onChange={(e) => handleInputChange(e)}
+          onKeyDown={(e) => handleKeyDown(e)}
         />
         <Button
           variant="contained"

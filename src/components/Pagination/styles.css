@@ -1,0 +1,35 @@
+.pages {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: start;
+  width: 100%;
+  height: auto;
+  margin: 30px 0 50px 0;
+}
+
+.pages button {
+  background-color: #f8f8f8;
+  border: 1px solid rgb(219, 219, 219);
+  border-radius: 10px;
+  color: #000;
+  height: 40px;
+  padding: 10px 15px;
+  margin: 0 3px;
+  cursor: pointer;
+}
+
+.pages button:hover {
+  background-color: #f2f2f2;
+}
+
+.pages button.active {
+  background-color: #1976d2;
+  color: #fff;
+  cursor: default;
+  font-weight: bold;
+}
+
+.pages button.active:hover {
+  background-color: #1565c0;
+}

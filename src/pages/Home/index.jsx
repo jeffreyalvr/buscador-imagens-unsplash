@@ -6,9 +6,6 @@ import api from "../../services/api";
 
 import Header from "../../components/Header";
 import ImageList from "../../components/ImageList";
-import Pagination from "../../components/Pagination";
-
-import Typography from "@mui/material/Typography";
 
 const Home = () => {
   const [text, setText] = useState("");
@@ -52,17 +49,12 @@ const Home = () => {
         handleButtonClick={handleButtonClick}
         handleKeyDown={handleKeyDown}
       />
-      <Typography
-        variant="overline"
-        sx={{
-          margin: "20px 0 0 0",
-          display: "block",
-        }}
-      >
-        Exibindo 10 itens por página.
-      </Typography>
-      <ImageList results={results} page={page} />
-      <Pagination pages={pagesList} handlePageChange={handlePageChange} />
+      <ImageList
+        results={results}
+        page={page}
+        pagesList={pagesList}
+        handlePageChange={handlePageChange}
+      />
     </Container>
   );
 };

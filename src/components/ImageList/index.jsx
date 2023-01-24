@@ -4,16 +4,17 @@ import Typography from "@mui/material/Typography";
 
 import Pagination from "../Pagination";
 
-const ImageList = ({ results, pagesList, handlePageChange }) => {
+const ImageList = ({ results, pagesList, page, handlePageChange }) => {
   return !results.length ? (
     ""
   ) : (
-    <>
+    <div className="image-list-container">
       <Typography
         variant="overline"
         sx={{
-          margin: "20px 0 0 0",
+          margin: "20px",
           display: "block",
+          textAlign: "center",
         }}
       >
         Exibindo até 10 itens por página.
@@ -27,8 +28,12 @@ const ImageList = ({ results, pagesList, handlePageChange }) => {
         ))}
       </div>
 
-      <Pagination pages={pagesList} handlePageChange={handlePageChange} />
-    </>
+      <Pagination
+        page={page}
+        pages={pagesList}
+        handlePageChange={handlePageChange}
+      />
+    </div>
   );
 };
 

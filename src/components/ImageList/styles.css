@@ -1,3 +1,7 @@
+.image-list-container {
+  border-top: 1px solid #f2f2f2;
+}
+
 .image-list {
   padding: 40px 0;
   display: flex;

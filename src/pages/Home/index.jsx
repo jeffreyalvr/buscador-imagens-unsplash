@@ -17,14 +17,18 @@ const Home = () => {
     setText(e.target.value);
   };
 
-  const handleAPICall = () => {
+  const handleAPICall = (params) => {
     api
-      .get(`/photos?query=${text}`)
+      .get(params ? `/photos?query=${text}` + params : `/photos?query=${text}`)
       .then((response) => {
         setPagesList(response.data.total_pages);
         setResults(response.data.results);
       })
       .catch((err) => console.error(err));
+  };
+
+  const handleAPICallByPage = (pageNumber) => {
+    handleAPICall(`&page=${pageNumber}`);
   };
 
   const handleButtonClick = () => {
@@ -39,6 +43,7 @@ const Home = () => {
 
   const handlePageChange = (pageNumber) => {
     setPage(pageNumber);
+    handleAPICallByPage(page);
   };
 
   return (

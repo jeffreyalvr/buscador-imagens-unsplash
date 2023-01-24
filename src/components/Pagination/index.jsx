@@ -18,32 +18,32 @@ const Pagination = ({ pages, page, handlePageChange }) => {
     console.log(currentPageRange);
   }, []);
 
-  const handlePreviousPage = () => {
+  const handlePreviousPageRange = () => {
     setCurrentPageRange((prevState) => prevState.map((el) => el - 1));
   };
 
-  const handleNextPage = () => {
+  const handleNextPageRange = () => {
     setCurrentPageRange((prevState) => prevState.map((el) => el + 1));
   };
 
   return (
     <div className="pages">
       {currentPageRange[0] > 1 ? (
-        <button onClick={() => handlePreviousPage()}>
+        <button onClick={() => handlePreviousPageRange()}>
           <ArrowBackIosNewIcon />
         </button>
       ) : null}
-      {pagesArray.map((p) => (
+      {pagesArray.map((number) => (
         <button
-          className={p === page ? "active" : ""}
-          onClick={() => handlePageChange(p)}
-          key={p}
+          className={number === page ? "active" : ""}
+          onClick={() => handlePageChange(number)}
+          key={number}
         >
-          {p}
+          {number}
         </button>
       ))}
       {pages > 1 ? (
-        <button onClick={() => handleNextPage()}>
+        <button onClick={() => handleNextPageRange()}>
           <ArrowForwardIosIcon />
         </button>
       ) : null}

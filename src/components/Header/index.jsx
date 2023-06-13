@@ -4,6 +4,7 @@ import logo from "../../assets/images/icon.png";
 
 import ImageSearchIcon from "@mui/icons-material/ImageSearch";
 import SearchIcon from "@mui/icons-material/Search";
+import CloseIcon from "@mui/icons-material/Close";
 
 import Container from "@mui/material/Container";
 
@@ -16,8 +17,10 @@ import InputAdornment from "@mui/material/InputAdornment";
 const Header = ({
   text,
   handleInputChange,
-  handleButtonClick,
+  handleSearchButton,
+  handleClearSearchButton,
   handleKeyDown,
+  searchActive,
 }) => {
   return (
     <header>
@@ -39,7 +42,7 @@ const Header = ({
               lg: "row",
               xl: "row",
             },
-            py: { xs: 2 },
+            py: { xs: 4 },
           }}
         >
           <TextField
@@ -77,11 +80,32 @@ const Header = ({
               mt: { xs: 1, sm: 0 },
               py: { xs: 2 },
             }}
-            onClick={handleButtonClick}
+            onClick={handleSearchButton}
           >
             Procurar
           </Button>
         </Box>
+
+        {searchActive ? (
+          <div className="search-container">
+            <label>Você pesquisou por:</label>
+            <Button
+              variant="contained"
+              size="medium"
+              endIcon={<CloseIcon />}
+              sx={{
+                flexGrow: 1,
+                background: "#5244fb",
+              }}
+              title="Remover o item da busca"
+              onClick={handleClearSearchButton}
+            >
+              {text}
+            </Button>
+          </div>
+        ) : (
+          ""
+        )}
       </Container>
     </header>
   );

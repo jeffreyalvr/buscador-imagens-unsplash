@@ -32,3 +32,12 @@ select {
   -webkit-background-clip: text !important;
   background-clip: text !important;
 }
+
+.search-container {
+  display: inline-block;
+}
+
+.search-container label {
+  color: #dfdfdf;
+  margin: 0 10px 0 0;
+}

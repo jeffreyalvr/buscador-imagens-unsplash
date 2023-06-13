@@ -17,6 +17,7 @@ const Home = () => {
   const [pagesList, setPagesList] = useState(1);
   const [results, setResults] = useState([]);
   const [searchActive, setSearchActive] = useState(false);
+  const [searchedText, setSearchedText] = useState("");
 
   const handleInputChange = (e) => {
     setText(e.target.value);
@@ -29,6 +30,7 @@ const Home = () => {
         setPagesList(response.data.total_pages);
         setResults(response.data.results);
         setSearchActive(true);
+        setSearchedText(text);
       })
       .catch((err) => console.error(err));
   };
@@ -74,6 +76,7 @@ const Home = () => {
         handleKeyDown={handleKeyDown}
         handleClearSearchButton={handleClearSearchButton}
         searchActive={searchActive}
+        searchedText={searchedText}
       />
       <Container maxWidth="xl">
         <ImageList results={results} />

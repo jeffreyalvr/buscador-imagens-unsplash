@@ -16,6 +16,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 
 const Header = ({
   text,
+  searchedText,
   handleInputChange,
   handleSearchButton,
   handleClearSearchButton,
@@ -86,7 +87,7 @@ const Header = ({
           </Button>
         </Box>
 
-        {searchActive ? (
+        {searchActive && searchedText ? (
           <div className="search-container">
             <label>Você pesquisou por:</label>
             <Button
@@ -100,7 +101,7 @@ const Header = ({
               title="Remover o item da busca"
               onClick={handleClearSearchButton}
             >
-              {text}
+              {searchedText}
             </Button>
           </div>
         ) : (

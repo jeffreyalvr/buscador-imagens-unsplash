@@ -97,6 +97,9 @@ const Header = ({
               sx={{
                 flexGrow: 1,
                 background: "#5244fb",
+                ":hover": {
+                  bgcolor: "#6254ff",
+                },
               }}
               title="Remover o item da busca"
               onClick={handleClearSearchButton}

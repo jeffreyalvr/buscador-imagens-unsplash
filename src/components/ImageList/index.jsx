@@ -2,9 +2,7 @@ import "./styles.css";
 
 import Typography from "@mui/material/Typography";
 
-import Pagination from "../Pagination";
-
-const ImageList = ({ results, pagesList, page, handlePageChange }) => {
+const ImageList = ({ results }) => {
   return !results.length ? (
     ""
   ) : (
@@ -15,6 +13,7 @@ const ImageList = ({ results, pagesList, page, handlePageChange }) => {
           margin: "20px",
           display: "block",
           textAlign: "center",
+          color: "#264992",
         }}
       >
         Exibindo até 10 itens por página.
@@ -27,12 +26,6 @@ const ImageList = ({ results, pagesList, page, handlePageChange }) => {
           </div>
         ))}
       </div>
-
-      <Pagination
-        page={page}
-        pages={pagesList}
-        handlePageChange={handlePageChange}
-      />
     </div>
   );
 };

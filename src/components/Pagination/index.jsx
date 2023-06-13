@@ -5,17 +5,16 @@ import { useEffect, useState } from "react";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
-const Pagination = ({ pages, page, handlePageChange }) => {
-  const [pagesArray, setPagesArray] = useState([]);
+const Pagination = ({ pagesList, page, handlePageChange }) => {
+  const [pagesListArray, setpagesListArray] = useState([]);
   const [currentPageRange, setCurrentPageRange] = useState([1, 5]);
 
-  const maxPagesToShow = 5;
+  const maxpagesListToShow = 5;
 
   useEffect(() => {
     // limitador de páginas para evitar excessos
-    if (pages > maxPagesToShow) pages = maxPagesToShow;
-    setPagesArray(Array.from({ length: pages }, (_, i) => i + 1));
-    console.log(currentPageRange);
+    if (pagesList > maxpagesListToShow) pagesList = maxpagesListToShow;
+    setpagesListArray(Array.from({ length: pagesList }, (_, i) => i + 1));
   }, []);
 
   const handlePreviousPageRange = () => {
@@ -33,7 +32,7 @@ const Pagination = ({ pages, page, handlePageChange }) => {
           <ArrowBackIosNewIcon />
         </button>
       ) : null}
-      {pagesArray.map((number) => (
+      {pagesListArray.map((number) => (
         <button
           className={number === page ? "active" : ""}
           onClick={() => handlePageChange(number)}
@@ -42,7 +41,7 @@ const Pagination = ({ pages, page, handlePageChange }) => {
           {number}
         </button>
       ))}
-      {pages > 1 ? (
+      {pagesList > 1 ? (
         <button onClick={() => handleNextPageRange()}>
           <ArrowForwardIosIcon />
         </button>

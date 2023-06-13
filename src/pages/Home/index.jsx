@@ -6,6 +6,10 @@ import api from "../../services/api";
 
 import Header from "../../components/Header";
 import ImageList from "../../components/ImageList";
+import Pagination from "../../components/Pagination";
+
+import { ThemeProvider, createTheme } from "@mui/material";
+import { blue } from "@mui/material/colors";
 
 const Home = () => {
   const [text, setText] = useState("");
@@ -46,21 +50,35 @@ const Home = () => {
     handleAPICallByPage(page);
   };
 
+  const theme = createTheme({
+    palette: {
+      primary: {
+        main: blue[500],
+      },
+    },
+  });
+
   return (
-    <Container maxWidth="lg">
+    <ThemeProvider theme={theme}>
       <Header
         text={text}
         handleInputChange={handleInputChange}
         handleButtonClick={handleButtonClick}
         handleKeyDown={handleKeyDown}
       />
-      <ImageList
-        results={results}
-        page={page}
-        pagesList={pagesList}
-        handlePageChange={handlePageChange}
-      />
-    </Container>
+      <Container maxWidth="xl">
+        <ImageList results={results} />
+        {pagesList <= 1 ? (
+          ""
+        ) : (
+          <Pagination
+            page={page}
+            pagesList={pagesList}
+            handlePageChange={handlePageChange}
+          />
+        )}
+      </Container>
+    </ThemeProvider>
   );
 };
 

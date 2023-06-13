@@ -1,5 +1,6 @@
 .image-list-container {
-  border-top: 1px solid #f2f2f2;
+  border-top: 1px solid #00000024;
+  overflow: hidden;
 }
 
 .image-list {
@@ -8,13 +9,15 @@
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
+  gap: 20px;
 }
 
 .image-list .image-item {
-  height: 200px;
-  margin: 10px;
+  display: inline-block;
+  height: auto;
 }
 
 .image-list .image-item img {
-  max-height: 100%;
+  object-fit: cover;
+  max-height: 400px;
 }

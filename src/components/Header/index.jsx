@@ -18,8 +18,8 @@ const Header = ({
   text,
   searchedText,
   handleInputChange,
-  handleSearchButton,
-  handleClearSearchButton,
+  handleSearch,
+  handleClearSearch,
   handleKeyDown,
   searchActive,
 }) => {
@@ -81,7 +81,7 @@ const Header = ({
               mt: { xs: 1, sm: 0 },
               py: { xs: 2 },
             }}
-            onClick={handleSearchButton}
+            onClick={handleSearch}
           >
             Procurar
           </Button>
@@ -102,7 +102,7 @@ const Header = ({
                 },
               }}
               title="Remover o item da busca"
-              onClick={handleClearSearchButton}
+              onClick={handleClearSearch}
             >
               {searchedText}
             </Button>

@@ -1,0 +1,16 @@
+.toast {
+  display: flex;
+  flex-direction: center;
+  align-items: center;
+  border: 1px solid rgb(255, 94, 94);
+  background-color: rgb(255, 164, 164);
+  padding: 20px;
+  border-radius: 4px;
+  gap: 15px;
+  color: rgb(118, 0, 0);
+  margin: 30px 0 0 0;
+}
+
+.toast p {
+  flex-grow: 1;
+}

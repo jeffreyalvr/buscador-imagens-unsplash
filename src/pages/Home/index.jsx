@@ -7,6 +7,7 @@ import api from "../../services/api";
 import Header from "../../components/Header";
 import ImageList from "../../components/ImageList";
 import Pagination from "../../components/Pagination";
+import Toast from "../../components/Toast";
 
 import { ThemeProvider, createTheme } from "@mui/material";
 import { blue } from "@mui/material/colors";
@@ -18,6 +19,7 @@ const Home = () => {
   const [results, setResults] = useState([]);
   const [searchActive, setSearchActive] = useState(false);
   const [searchedText, setSearchedText] = useState("");
+  const [showToast, setShowToast] = useState(false);
 
   const handleInputChange = (e) => {
     setText(e.target.value);
@@ -39,17 +41,26 @@ const Home = () => {
     handleAPICall(`&page=${pageNumber}`);
   };
 
-  const handleSearchButton = () => {
-    if (!text) return;
-    handleAPICall();
+  const handleKeyDown = (e) => {
+    if (e.keyCode == 13) handleSearch();
   };
 
-  const handleKeyDown = (e) => {
-    if (!text) return;
-    if (e.keyCode == 13) {
-      resetPageNumber();
+  const handleSearch = () => {
+    resetPageNumber();
+
+    if (isTextInputValid()) {
+      showEmptyTextToast(false);
       handleAPICall();
-    }
+    } else showEmptyTextToast(true);
+  };
+
+  const isTextInputValid = () => {
+    if (!text || !/\S/.test(text)) return false;
+    return true;
+  };
+
+  const showEmptyTextToast = (status) => {
+    setShowToast(status);
   };
 
   const handlePageChange = (pageNumber) => {
@@ -61,7 +72,7 @@ const Home = () => {
     setPage(1);
   };
 
-  const handleClearSearchButton = () => {
+  const handleClearSearch = () => {
     setText("");
     setSearchActive(false);
   };
@@ -79,13 +90,21 @@ const Home = () => {
       <Header
         text={text}
         handleInputChange={handleInputChange}
-        handleSearchButton={handleSearchButton}
+        handleSearch={handleSearch}
         handleKeyDown={handleKeyDown}
-        handleClearSearchButton={handleClearSearchButton}
+        handleClearSearch={handleClearSearch}
         searchActive={searchActive}
         searchedText={searchedText}
       />
       <Container maxWidth="xl">
+        {showToast ? (
+          <Toast
+            text="O campo de busca não pode ficar vazio."
+            showEmptyTextToast={showEmptyTextToast}
+          />
+        ) : (
+          ""
+        )}
         <ImageList results={results} />
         {pagesList <= 1 ? (
           ""

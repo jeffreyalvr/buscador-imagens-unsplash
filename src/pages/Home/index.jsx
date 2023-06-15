@@ -27,12 +27,16 @@ const Home = () => {
 
   const handleAPICall = (params) => {
     api
-      .get(params ? `/photos?query=${text}` + params : `/photos?query=${text}`)
+      .get(
+        params
+          ? `/photos?query=${text || searchedText}` + params
+          : `/photos?query=${text || searchedText}`
+      )
       .then((response) => {
+        setSearchActive(true);
         setPagesList(response.data.total_pages);
         setResults(response.data.results);
-        setSearchActive(true);
-        setSearchedText(text);
+        setSearchedText(text || searchedText);
       })
       .catch((err) => console.error(err));
   };

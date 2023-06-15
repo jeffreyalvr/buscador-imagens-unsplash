@@ -46,12 +46,19 @@ const Home = () => {
 
   const handleKeyDown = (e) => {
     if (!text) return;
-    if (e.keyCode == 13) handleAPICall();
+    if (e.keyCode == 13) {
+      resetPageNumber();
+      handleAPICall();
+    }
   };
 
   const handlePageChange = (pageNumber) => {
     setPage(pageNumber);
     handleAPICallByPage(page);
+  };
+
+  const resetPageNumber = () => {
+    setPage(1);
   };
 
   const handleClearSearchButton = () => {

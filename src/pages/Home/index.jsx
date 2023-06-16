@@ -1,31 +1,35 @@
-import Container from "@mui/material/Container";
-
 import { useState } from "react";
 
 import api from "../../services/api";
 
+import { ThemeProvider, createTheme } from "@mui/material";
+import Container from "@mui/material/Container";
+import { blue } from "@mui/material/colors";
+
 import Header from "../../components/Header";
 import ImageList from "../../components/ImageList";
 import Pagination from "../../components/Pagination";
+import Loading from "../../components/Loading";
 import Toast from "../../components/Toast";
-
-import { ThemeProvider, createTheme } from "@mui/material";
-import { blue } from "@mui/material/colors";
 
 const Home = () => {
   const [text, setText] = useState("");
+  const [searchedText, setSearchedText] = useState("");
   const [page, setPage] = useState(1);
   const [pagesList, setPagesList] = useState(1);
   const [results, setResults] = useState([]);
   const [searchActive, setSearchActive] = useState(false);
-  const [searchedText, setSearchedText] = useState("");
-  const [showToast, setShowToast] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [toastVisibility, setToastVisibility] = useState(false);
+  const [toastText, setToastText] = useState("");
 
   const handleInputChange = (e) => {
     setText(e.target.value);
   };
 
   const handleAPICall = (params) => {
+    setLoading(true);
+
     api
       .get(
         params
@@ -33,6 +37,9 @@ const Home = () => {
           : `/photos?query=${text || searchedText}`
       )
       .then((response) => {
+        setLoading(false);
+        if (response.data.total <= 0) handleNoResults();
+
         setSearchActive(true);
         setPagesList(response.data.total_pages);
         setResults(response.data.results);
@@ -50,12 +57,21 @@ const Home = () => {
   };
 
   const handleSearch = () => {
-    resetPageNumber();
-
     if (isTextInputValid()) {
-      showEmptyTextToast(false);
+      setToastVisibility(false);
       handleAPICall();
-    } else showEmptyTextToast(true);
+      resetPageNumber();
+    } else {
+      changeToastText("O campo de busca não pode ficar vazio.");
+      setToastVisibility(true);
+    }
+  };
+
+  const handleNoResults = () => {
+    changeToastText(
+      `Nenhum resultado encontrado para a busca "${text || searchedText}".`
+    );
+    handleShowToast(true);
   };
 
   const isTextInputValid = () => {
@@ -63,8 +79,12 @@ const Home = () => {
     return true;
   };
 
-  const showEmptyTextToast = (status) => {
-    setShowToast(status);
+  const changeToastText = (text) => {
+    setToastText(text);
+  };
+
+  const handleShowToast = (status) => {
+    setToastVisibility(status);
   };
 
   const handlePageChange = (pageNumber) => {
@@ -101,23 +121,24 @@ const Home = () => {
         searchedText={searchedText}
       />
       <Container maxWidth="xl">
-        {showToast ? (
-          <Toast
-            text="O campo de busca não pode ficar vazio."
-            showEmptyTextToast={showEmptyTextToast}
-          />
+        {loading ? (
+          <Loading />
         ) : (
-          ""
-        )}
-        <ImageList results={results} />
-        {pagesList <= 1 ? (
-          ""
-        ) : (
-          <Pagination
-            page={page}
-            pagesList={pagesList}
-            handlePageChange={handlePageChange}
-          />
+          <>
+            <Toast
+              toastVisibility={toastVisibility}
+              text={toastText}
+              handleShowToast={handleShowToast}
+            />
+            <ImageList results={results} />
+            {pagesList > 1 ? (
+              <Pagination
+                page={page}
+                pagesList={pagesList}
+                handlePageChange={handlePageChange}
+              />
+            ) : null}
+          </>
         )}
       </Container>
     </ThemeProvider>

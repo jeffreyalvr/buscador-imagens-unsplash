@@ -3,8 +3,8 @@ import "./styles.css";
 import CloseIcon from "@mui/icons-material/Close";
 import Button from "@mui/material/Button";
 
-const Toast = ({ showEmptyTextToast, text }) => {
-  return (
+const Toast = ({ handleShowToast, text, toastVisibility }) =>
+  toastVisibility ? (
     <div className="toast">
       <p>{text}</p>
       <Button
@@ -16,13 +16,12 @@ const Toast = ({ showEmptyTextToast, text }) => {
             bgcolor: "#ff5953",
           },
         }}
-        onClick={() => showEmptyTextToast(false)}
+        onClick={() => handleShowToast(false)}
         title="Fechar"
       >
         <CloseIcon />
       </Button>
     </div>
-  );
-};
+  ) : null;
 
 export default Toast;

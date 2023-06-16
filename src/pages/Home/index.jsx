@@ -22,6 +22,7 @@ const Home = () => {
   const [loading, setLoading] = useState(false);
   const [toastVisibility, setToastVisibility] = useState(false);
   const [toastText, setToastText] = useState("");
+  const [itemsPerPage, setItemsPerPage] = useState(10);
 
   const handleInputChange = (e) => {
     setText(e.target.value);
@@ -46,10 +47,6 @@ const Home = () => {
         setSearchedText(text || searchedText);
       })
       .catch((err) => console.error(err));
-  };
-
-  const handleAPICallByPage = (pageNumber) => {
-    handleAPICall(`&page=${pageNumber}`);
   };
 
   const handleKeyDown = (e) => {
@@ -89,7 +86,7 @@ const Home = () => {
 
   const handlePageChange = (pageNumber) => {
     setPage(pageNumber);
-    handleAPICallByPage(page);
+    handleAPICall(`&page=${pageNumber}`);
   };
 
   const resetPageNumber = () => {
@@ -99,6 +96,12 @@ const Home = () => {
   const handleClearSearch = () => {
     setText("");
     setSearchActive(false);
+  };
+
+  const handleItemsPerPage = (e) => {
+    const perPage = e.target.value;
+    setItemsPerPage(perPage);
+    handleAPICall(`&per_page=${perPage}`);
   };
 
   const theme = createTheme({
@@ -130,7 +133,11 @@ const Home = () => {
               text={toastText}
               handleShowToast={handleShowToast}
             />
-            <ImageList results={results} />
+            <ImageList
+              results={results}
+              itemsPerPage={itemsPerPage}
+              handleItemsPerPage={handleItemsPerPage}
+            />
             {pagesList > 1 ? (
               <Pagination
                 page={page}

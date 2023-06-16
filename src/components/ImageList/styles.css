@@ -3,6 +3,15 @@
   overflow: hidden;
 }
 
+.items-per-page-container {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 25px 0;
+  border-bottom: 1px dotted #cecece;
+}
+
 .image-list {
   padding: 40px 0;
   display: flex;

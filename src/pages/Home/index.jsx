@@ -22,7 +22,7 @@ const Home = () => {
   const [loading, setLoading] = useState(false);
   const [toastVisibility, setToastVisibility] = useState(false);
   const [toastText, setToastText] = useState("");
-  const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [itemsPerPage, setItemsPerPage] = useState(5);
 
   const handleInputChange = (e) => {
     setText(e.target.value);
@@ -35,7 +35,8 @@ const Home = () => {
       .get(
         params
           ? `/photos?query=${text || searchedText}` + params
-          : `/photos?query=${text || searchedText}`
+          : `/photos?query=${text || searchedText}` +
+              `&per_page=${itemsPerPage}`
       )
       .then((response) => {
         setLoading(false);
@@ -55,12 +56,12 @@ const Home = () => {
 
   const handleSearch = () => {
     if (isTextInputValid()) {
-      setToastVisibility(false);
+      handleShowToast(false);
       handleAPICall();
       resetPageNumber();
     } else {
       changeToastText("O campo de busca não pode ficar vazio.");
-      setToastVisibility(true);
+      handleShowToast(true);
     }
   };
 
@@ -72,8 +73,7 @@ const Home = () => {
   };
 
   const isTextInputValid = () => {
-    if (!text || !/\S/.test(text)) return false;
-    return true;
+    return !text || !/\S/.test(text);
   };
 
   const changeToastText = (text) => {
@@ -137,14 +137,16 @@ const Home = () => {
               results={results}
               itemsPerPage={itemsPerPage}
               handleItemsPerPage={handleItemsPerPage}
+              img_author={1}
+              img_dimensions={2}
             />
-            {pagesList > 1 ? (
+            {pagesList > 1 && (
               <Pagination
                 page={page}
                 pagesList={pagesList}
                 handlePageChange={handlePageChange}
               />
-            ) : null}
+            )}
           </>
         )}
       </Container>

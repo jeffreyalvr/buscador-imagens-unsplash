@@ -73,7 +73,7 @@ const Home = () => {
   };
 
   const isTextInputValid = () => {
-    return !text || !/\S/.test(text);
+    return !text || !/^[\d\s]+$/.test(text);
   };
 
   const changeToastText = (text) => {

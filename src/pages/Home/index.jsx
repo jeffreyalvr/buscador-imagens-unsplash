@@ -137,8 +137,6 @@ const Home = () => {
               results={results}
               itemsPerPage={itemsPerPage}
               handleItemsPerPage={handleItemsPerPage}
-              img_author={1}
-              img_dimensions={2}
             />
             {pagesList > 1 && (
               <Pagination

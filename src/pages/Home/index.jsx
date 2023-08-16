@@ -12,6 +12,8 @@ import Pagination from "../../components/Pagination";
 import Loading from "../../components/Loading";
 import Toast from "../../components/Toast";
 
+import Footer from "../../components/Footer";
+
 const Home = () => {
   const [text, setText] = useState("");
   const [searchedText, setSearchedText] = useState("");
@@ -147,6 +149,7 @@ const Home = () => {
             )}
           </>
         )}
+        <Footer />
       </Container>
     </ThemeProvider>
   );

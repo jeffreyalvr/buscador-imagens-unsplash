@@ -36,7 +36,9 @@ const Home = () => {
     api
       .get(
         params
-          ? `/photos?query=${text || searchedText}` + params
+          ? `/photos?query=${text || searchedText}` +
+              params +
+              `&per_page=${itemsPerPage}`
           : `/photos?query=${text || searchedText}` +
               `&per_page=${itemsPerPage}`
       )
@@ -144,6 +146,7 @@ const Home = () => {
               <Pagination
                 page={page}
                 pagesList={pagesList}
+                itemsPerPage={itemsPerPage}
                 handlePageChange={handlePageChange}
               />
             )}

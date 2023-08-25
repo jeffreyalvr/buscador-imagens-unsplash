@@ -30,18 +30,11 @@ const Home = () => {
     setText(e.target.value);
   };
 
-  const handleAPICall = (params) => {
+  const handleAPICall = (perPage = itemsPerPage) => {
     setLoading(true);
 
     api
-      .get(
-        params
-          ? `/photos?query=${text || searchedText}` +
-              params +
-              `&per_page=${itemsPerPage}`
-          : `/photos?query=${text || searchedText}` +
-              `&per_page=${itemsPerPage}`
-      )
+      .get(`/photos?query=${text || searchedText}` + `&per_page=${perPage}`)
       .then((response) => {
         setLoading(false);
         if (response.data.total <= 0) handleNoResults();
@@ -90,7 +83,7 @@ const Home = () => {
 
   const handlePageChange = (pageNumber) => {
     setPage(pageNumber);
-    handleAPICall(`&page=${pageNumber}`);
+    handleAPICall();
   };
 
   const resetPageNumber = () => {
@@ -105,7 +98,7 @@ const Home = () => {
   const handleItemsPerPage = (e) => {
     const perPage = e.target.value;
     setItemsPerPage(perPage);
-    handleAPICall(`&per_page=${perPage}`);
+    handleAPICall(perPage);
   };
 
   const theme = createTheme({

@@ -6,7 +6,6 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
-import { Javascript } from "@mui/icons-material";
 
 const ImageList = ({ results, itemsPerPage, handleItemsPerPage }) => {
   return (
@@ -33,7 +32,11 @@ const ImageList = ({ results, itemsPerPage, handleItemsPerPage }) => {
         <div className="image-list">
           {results.map((result) => (
             <div className="image-item" key={result.id}>
-              <img src={result.urls.raw} alt={result.description} />
+              <img
+                src={result.urls.raw}
+                alt={result.description}
+                loading="lazy"
+              />
               <div className="overlay">
                 <div className="overlay-container">
                   <p>@{result.user.username}</p>
@@ -41,7 +44,11 @@ const ImageList = ({ results, itemsPerPage, handleItemsPerPage }) => {
                     {result.height}x{result.width}
                   </span>
                   <span>
-                    <img class="likes-icon" src={img_likes} alt="Curtidas" />
+                    <img
+                      className="likes-icon"
+                      src={img_likes}
+                      alt="Curtidas"
+                    />
                     {result.likes}
                   </span>
                   <Button

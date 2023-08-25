@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import api from "../../services/api";
 
@@ -26,23 +26,35 @@ const Home = () => {
   const [toastText, setToastText] = useState("");
   const [itemsPerPage, setItemsPerPage] = useState(5);
 
+  useEffect(() => {
+    handleAPICall();
+  }, [searchActive]);
+
+  useEffect(() => {
+    handleAPICall(true);
+  }, [page, itemsPerPage]);
+
   const handleInputChange = (e) => {
     setText(e.target.value);
   };
 
-  const handleAPICall = (perPage = itemsPerPage) => {
+  const handleAPICall = (isSameTopic) => {
+    if (!searchActive) return;
+
     setLoading(true);
 
     api
-      .get(`/photos?query=${text || searchedText}` + `&per_page=${perPage}`)
+      .get(
+        `/photos?query=${isSameTopic ? searchedText : text}` +
+          `&per_page=${itemsPerPage}` +
+          `&page=${page}`
+      )
       .then((response) => {
         setLoading(false);
         if (response.data.total <= 0) handleNoResults();
 
-        setSearchActive(true);
         setPagesList(response.data.total_pages);
         setResults(response.data.results);
-        setSearchedText(text || searchedText);
       })
       .catch((err) => console.error(err));
   };
@@ -52,14 +64,23 @@ const Home = () => {
   };
 
   const handleSearch = () => {
-    if (isTextInputValid()) {
-      handleShowToast(false);
-      handleAPICall();
-      resetPageNumber();
-    } else {
-      changeToastText("O campo de busca não pode ficar vazio.");
+    if (isTextInputInvalid()) {
+      changeToastText(
+        "O campo de busca não pode ficar vazio ou conter apenas números."
+      );
       handleShowToast(true);
+      return;
     }
+
+    setSearchedText(text);
+    handleSearchStatus(true);
+    handleShowToast(false);
+    handlePageChange(1);
+    handleAPICall();
+  };
+
+  const handleSearchStatus = (state) => {
+    setSearchActive(state);
   };
 
   const handleNoResults = () => {
@@ -69,8 +90,8 @@ const Home = () => {
     handleShowToast(true);
   };
 
-  const isTextInputValid = () => {
-    return !text || !/^[\d\s]+$/.test(text);
+  const isTextInputInvalid = () => {
+    return !text || /^[\d\s]+$/.test(text);
   };
 
   const changeToastText = (text) => {
@@ -81,24 +102,17 @@ const Home = () => {
     setToastVisibility(status);
   };
 
+  const handleClearSearch = () => {
+    handleSearchStatus(false);
+  };
+
   const handlePageChange = (pageNumber) => {
     setPage(pageNumber);
-    handleAPICall();
-  };
-
-  const resetPageNumber = () => {
-    setPage(1);
-  };
-
-  const handleClearSearch = () => {
-    setText("");
-    setSearchActive(false);
   };
 
   const handleItemsPerPage = (e) => {
     const perPage = e.target.value;
     setItemsPerPage(perPage);
-    handleAPICall(perPage);
   };
 
   const theme = createTheme({
@@ -112,13 +126,13 @@ const Home = () => {
   return (
     <ThemeProvider theme={theme}>
       <Header
-        text={text}
         handleInputChange={handleInputChange}
         handleSearch={handleSearch}
         handleKeyDown={handleKeyDown}
         handleClearSearch={handleClearSearch}
         searchActive={searchActive}
         searchedText={searchedText}
+        text={text}
       />
       <Container maxWidth="xl">
         {loading ? (

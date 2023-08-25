@@ -87,7 +87,7 @@ const Header = ({
           </Button>
         </Box>
 
-        {searchActive && searchedText ? (
+        {searchActive && (
           <div className="search-container">
             <label>Você pesquisou por:</label>
             <Button
@@ -107,8 +107,6 @@ const Header = ({
               {searchedText}
             </Button>
           </div>
-        ) : (
-          ""
         )}
       </Container>
     </header>

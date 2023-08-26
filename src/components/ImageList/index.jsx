@@ -33,7 +33,7 @@ const ImageList = ({ results, itemsPerPage, handleItemsPerPage }) => {
           {results.map((result) => (
             <div className="image-item" key={result.id}>
               <img
-                src={result.urls.raw}
+                src={result.urls.regular}
                 alt={result.description}
                 loading="lazy"
               />

@@ -2,6 +2,10 @@ import "./styles.css";
 
 import img_likes from "../../assets/images/likes.png";
 
+import DownloadIcon from "@mui/icons-material/Download";
+import ViewnIcon from "@mui/icons-material/Visibility";
+import InfoIcon from "@mui/icons-material/HelpOutline";
+
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
@@ -13,8 +17,10 @@ const ImageList = ({
   handleItemsPerPage,
   handleImageOrientation,
   handleImageSort,
+  handleImageSafe,
   img_orientation,
   img_sort,
+  img_safe,
 }) => {
   return (
     !!results.length && (
@@ -60,12 +66,28 @@ const ImageList = ({
               color: "#264992",
             }}
           >
-            Quantidade de itens por página
+            Itens por página
           </Typography>
           <Select value={itemsPerPage} onChange={handleItemsPerPage}>
             <MenuItem value={5}>5</MenuItem>
             <MenuItem value={10}>10</MenuItem>
             <MenuItem value={25}>25</MenuItem>
+          </Select>
+          <Typography
+            variant="overline"
+            sx={{
+              margin: "20px",
+              display: "block",
+              textAlign: "center",
+              color: "#264992",
+            }}
+            title="Reduz as chances de conteúdo impróprio ser listado nos resultados"
+          >
+            Filtragem NSFW <InfoIcon />
+          </Typography>
+          <Select value={img_safe} onChange={handleImageSafe}>
+            <MenuItem value="high">alta</MenuItem>
+            <MenuItem value="low">baixa</MenuItem>
           </Select>
         </div>
         <div className="image-list">
@@ -90,17 +112,32 @@ const ImageList = ({
                     />
                     {result.likes}
                   </span>
-                  <Button
-                    variant="contained"
-                    size="small"
-                    sx={{
-                      flexGrow: 1,
-                      background: "linear-gradient(254deg, #00a7cb, #5144fb)",
-                    }}
-                    onClick={() => window.open(result.urls.full)}
-                  >
-                    Ver imagem
-                  </Button>
+                  <div className="buttons-list">
+                    <Button
+                      variant="contained"
+                      size="small"
+                      startIcon={<ViewnIcon />}
+                      sx={{
+                        flexGrow: 1,
+                        background: "linear-gradient(254deg, #00a7cb, #5144fb)",
+                      }}
+                      onClick={() => window.open(result.urls.full)}
+                    >
+                      Ver imagem
+                    </Button>
+                    <Button
+                      variant="contained"
+                      size="small"
+                      startIcon={<DownloadIcon />}
+                      sx={{
+                        flexGrow: 1,
+                        background: "linear-gradient(254deg, #00a7cb, #5144fb)",
+                      }}
+                      onClick={() => window.open(result.urls.full)}
+                    >
+                      Download
+                    </Button>
+                  </div>
                 </div>
               </div>
             </div>

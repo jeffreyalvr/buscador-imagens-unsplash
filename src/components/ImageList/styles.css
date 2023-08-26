@@ -12,6 +12,15 @@
   border-bottom: 1px dotted #cecece;
 }
 
+.items-per-page-container span {
+  display: flex;
+  align-items: center;
+}
+
+.items-per-page-container span svg {
+  margin-left: 5px;
+}
+
 .image-list {
   padding: 40px 0;
   display: flex;
@@ -45,6 +54,19 @@
   align-items: center;
   gap: 10px;
   width: 100%;
+}
+
+.overlay .overlay-container .buttons-list {
+  margin-top: 10px;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  padding: 0 15px;
+  gap: 10px;
+}
+
+.overlay .overlay-container .buttons-list button {
+  flex-grow: 0;
 }
 
 .image-list .image-item:hover .overlay {

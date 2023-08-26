@@ -27,6 +27,7 @@ const Home = () => {
   const [itemsPerPage, setItemsPerPage] = useState(5);
   const [imgOrientation, setImgOrientation] = useState("both");
   const [imgSort, setImgSort] = useState("popular");
+  const [imgSafe, setImgSafe] = useState("high");
 
   useEffect(() => {
     handleAPICall();
@@ -34,7 +35,7 @@ const Home = () => {
 
   useEffect(() => {
     handleAPICall(true);
-  }, [page, itemsPerPage, imgOrientation, imgSort]);
+  }, [page, itemsPerPage, imgOrientation, imgSort, imgSafe]);
 
   const handleInputChange = (e) => {
     setText(e.target.value);
@@ -49,7 +50,8 @@ const Home = () => {
       `/photos?query=${isSameTopic ? searchedText : text}` +
       `&per_page=${itemsPerPage}` +
       `&page=${page}` +
-      `&order_by=${imgSort}`;
+      `&order_by=${imgSort}` +
+      `&content_filter=${imgSafe}`;
     api
       .get(
         imgOrientation !== "both" ? url + `&orientation=${imgOrientation}` : url
@@ -130,6 +132,11 @@ const Home = () => {
     setImgSort(sort_by);
   };
 
+  const handleImageSafe = (e) => {
+    const status = e.target.value;
+    setImgSafe(status);
+  };
+
   const theme = createTheme({
     palette: {
       primary: {
@@ -165,8 +172,10 @@ const Home = () => {
               handleItemsPerPage={handleItemsPerPage}
               img_orientation={imgOrientation}
               img_sort={imgSort}
+              img_safe={imgSafe}
               handleImageOrientation={handleImageOrientation}
               handleImageSort={handleImageSort}
+              handleImageSafe={handleImageSafe}
             />
             {pagesList > 1 && (
               <Pagination

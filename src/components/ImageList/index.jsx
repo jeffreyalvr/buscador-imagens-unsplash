@@ -2,8 +2,8 @@ import "./styles.css";
 
 import img_likes from "../../assets/images/likes.png";
 
-import DownloadIcon from "@mui/icons-material/Download";
-import ViewnIcon from "@mui/icons-material/Visibility";
+import ViewIcon from "@mui/icons-material/OpenInNew";
+import ExpandIcon from "@mui/icons-material/Visibility";
 import InfoIcon from "@mui/icons-material/HelpOutline";
 
 import Typography from "@mui/material/Typography";
@@ -116,26 +116,27 @@ const ImageList = ({
                     <Button
                       variant="contained"
                       size="small"
-                      startIcon={<ViewnIcon />}
+                      startIcon={<ExpandIcon />}
                       sx={{
                         flexGrow: 1,
                         background: "linear-gradient(254deg, #00a7cb, #5144fb)",
                       }}
                       onClick={() => window.open(result.urls.full)}
                     >
-                      Ver imagem
+                      Expandir
                     </Button>
                     <Button
                       variant="contained"
                       size="small"
-                      startIcon={<DownloadIcon />}
+                      startIcon={<ViewIcon />}
                       sx={{
                         flexGrow: 1,
-                        background: "linear-gradient(254deg, #00a7cb, #5144fb)",
+                        background:
+                          "linear-gradient(254deg, #bba434 , #db8062)",
                       }}
-                      onClick={() => window.open(result.urls.full)}
+                      onClick={() => window.open(result.links.html)}
                     >
-                      Download
+                      Ver no Unsplash
                     </Button>
                   </div>
                 </div>

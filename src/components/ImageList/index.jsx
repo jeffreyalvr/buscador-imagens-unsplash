@@ -12,12 +12,29 @@ const ImageList = ({
   itemsPerPage,
   handleItemsPerPage,
   handleImageOrientation,
+  handleImageSort,
   img_orientation,
+  img_sort,
 }) => {
   return (
     !!results.length && (
       <div className="image-list-container">
         <div className="items-per-page-container">
+          <Typography
+            variant="overline"
+            sx={{
+              margin: "20px",
+              display: "block",
+              textAlign: "center",
+              color: "#264992",
+            }}
+          >
+            Ordenar por
+          </Typography>
+          <Select value={img_sort} onChange={handleImageSort}>
+            <MenuItem value="popular">relevância</MenuItem>
+            <MenuItem value="latest">mais recente</MenuItem>
+          </Select>
           <Typography
             variant="overline"
             sx={{

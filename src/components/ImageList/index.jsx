@@ -7,11 +7,33 @@ import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 
-const ImageList = ({ results, itemsPerPage, handleItemsPerPage }) => {
+const ImageList = ({
+  results,
+  itemsPerPage,
+  handleItemsPerPage,
+  handleImageOrientation,
+  img_orientation,
+}) => {
   return (
     !!results.length && (
       <div className="image-list-container">
         <div className="items-per-page-container">
+          <Typography
+            variant="overline"
+            sx={{
+              margin: "20px",
+              display: "block",
+              textAlign: "center",
+              color: "#264992",
+            }}
+          >
+            Orientação
+          </Typography>
+          <Select value={img_orientation} onChange={handleImageOrientation}>
+            <MenuItem value="both">ambas</MenuItem>
+            <MenuItem value="portrait">retrato</MenuItem>
+            <MenuItem value="landscape">paisagem</MenuItem>
+          </Select>
           <Typography
             variant="overline"
             sx={{

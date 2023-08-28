@@ -15,7 +15,14 @@ const Footer = () => {
       </span>
       <p className="disclaimer">
         Imagens buscadas através da API pública{" "}
-        <a href="https://unsplash.com/">Unsplash</a>.
+        <a
+          href="https://unsplash.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Unsplash
+        </a>
+        .
       </p>
       <p className="disclaimer">
         Todos os dados pertencem aos seus respectivos donos.

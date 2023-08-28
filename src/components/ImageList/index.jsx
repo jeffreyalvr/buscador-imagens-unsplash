@@ -26,69 +26,77 @@ const ImageList = ({
     !!results.length && (
       <div className="image-list-container">
         <div className="items-per-page-container">
-          <Typography
-            variant="overline"
-            sx={{
-              margin: "20px",
-              display: "block",
-              textAlign: "center",
-              color: "#264992",
-            }}
-          >
-            Ordenar por
-          </Typography>
-          <Select value={img_sort} onChange={handleImageSort}>
-            <MenuItem value="popular">relevância</MenuItem>
-            <MenuItem value="latest">mais recente</MenuItem>
-          </Select>
-          <Typography
-            variant="overline"
-            sx={{
-              margin: "20px",
-              display: "block",
-              textAlign: "center",
-              color: "#264992",
-            }}
-          >
-            Orientação
-          </Typography>
-          <Select value={img_orientation} onChange={handleImageOrientation}>
-            <MenuItem value="both">ambas</MenuItem>
-            <MenuItem value="portrait">retrato</MenuItem>
-            <MenuItem value="landscape">paisagem</MenuItem>
-          </Select>
-          <Typography
-            variant="overline"
-            sx={{
-              margin: "20px",
-              display: "block",
-              textAlign: "center",
-              color: "#264992",
-            }}
-          >
-            Itens por página
-          </Typography>
-          <Select value={itemsPerPage} onChange={handleItemsPerPage}>
-            <MenuItem value={5}>5</MenuItem>
-            <MenuItem value={10}>10</MenuItem>
-            <MenuItem value={25}>25</MenuItem>
-          </Select>
-          <Typography
-            variant="overline"
-            sx={{
-              margin: "20px",
-              display: "block",
-              textAlign: "center",
-              color: "#264992",
-            }}
-            title="Reduz as chances de conteúdo impróprio ser listado nos resultados"
-          >
-            Filtragem NSFW <InfoIcon />
-          </Typography>
-          <Select value={img_safe} onChange={handleImageSafe}>
-            <MenuItem value="high">alta</MenuItem>
-            <MenuItem value="low">baixa</MenuItem>
-          </Select>
+          <div className="item">
+            <Typography
+              variant="overline"
+              sx={{
+                margin: "20px",
+                display: "block",
+                textAlign: "center",
+                color: "#264992",
+              }}
+            >
+              Ordenar por
+            </Typography>
+            <Select value={img_sort} onChange={handleImageSort}>
+              <MenuItem value="popular">relevância</MenuItem>
+              <MenuItem value="latest">mais recente</MenuItem>
+            </Select>
+          </div>
+          <div className="item">
+            <Typography
+              variant="overline"
+              sx={{
+                margin: "20px",
+                display: "block",
+                textAlign: "center",
+                color: "#264992",
+              }}
+            >
+              Orientação
+            </Typography>
+            <Select value={img_orientation} onChange={handleImageOrientation}>
+              <MenuItem value="both">ambas</MenuItem>
+              <MenuItem value="portrait">retrato</MenuItem>
+              <MenuItem value="landscape">paisagem</MenuItem>
+            </Select>
+          </div>
+          <div className="item">
+            <Typography
+              variant="overline"
+              sx={{
+                margin: "20px",
+                display: "block",
+                textAlign: "center",
+                color: "#264992",
+              }}
+            >
+              Itens por página
+            </Typography>
+            <Select value={itemsPerPage} onChange={handleItemsPerPage}>
+              <MenuItem value={5}>5</MenuItem>
+              <MenuItem value={10}>10</MenuItem>
+              <MenuItem value={25}>25</MenuItem>
+            </Select>
+          </div>
+          <div className="item">
+            <Typography
+              variant="overline"
+              sx={{
+                margin: "20px",
+                display: "block",
+                textAlign: "center",
+                color: "#264992",
+              }}
+              title="Reduz as chances de conteúdo impróprio ser listado nos resultados"
+            >
+              Filtragem NSFW <InfoIcon />
+            </Typography>
+            <Select value={img_safe} onChange={handleImageSafe}>
+              <MenuItem value="high">alta</MenuItem>
+              <MenuItem value="low">baixa</MenuItem>
+            </Select>
+          </div>
         </div>
         <div className="image-list">
           {results.map((result) => (

@@ -5,16 +5,18 @@ import { useEffect, useState } from "react";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
-const Pagination = ({ pagesList, page, handlePageChange }) => {
-  const [pagesListArray, setpagesListArray] = useState([]);
+const Pagination = ({ pagesList, page, handlePageChange, itemsPerPage }) => {
+  const [pagesListArray, setPagesListArray] = useState([]);
   const [currentPageRange, setCurrentPageRange] = useState([1, 5]);
-
-  const maxpagesListToShow = 5;
+  const [moreThan5Pages, setMoreThan5Pages] = useState(false);
 
   useEffect(() => {
-    // limitador de páginas para evitar excessos
-    if (pagesList > maxpagesListToShow) pagesList = maxpagesListToShow;
-    setpagesListArray(Array.from({ length: pagesList }, (_, i) => i + 1));
+    if (pagesList > 5) {
+      setMoreThan5Pages(true);
+      setPagesListArray(Array.from({ length: 5 }, (_, i) => i + 1));
+    } else {
+      setMoreThan5Pages(false);
+    }
   }, []);
 
   const handlePreviousPageRange = () => {
@@ -27,11 +29,12 @@ const Pagination = ({ pagesList, page, handlePageChange }) => {
 
   return (
     <div className="pages">
-      {currentPageRange[0] > 1 ? (
-        <button onClick={() => handlePreviousPageRange()}>
+      {currentPageRange[0] > 1 && (
+        <button className="arrow-btn" onClick={() => handlePreviousPageRange()}>
           <ArrowBackIosNewIcon />
         </button>
-      ) : null}
+      )}
+
       {pagesListArray.map((number) => (
         <button
           className={number === page ? "active" : ""}
@@ -41,11 +44,20 @@ const Pagination = ({ pagesList, page, handlePageChange }) => {
           {number}
         </button>
       ))}
-      {pagesList > 1 ? (
-        <button onClick={() => handleNextPageRange()}>
-          <ArrowForwardIosIcon />
-        </button>
-      ) : null}
+
+      {moreThan5Pages && page < pagesList && (
+        <>
+          {pagesList > 1 && (
+            <button className="arrow-btn" onClick={() => handleNextPageRange()}>
+              <ArrowForwardIosIcon />
+            </button>
+          )}
+          <span>&bull;&bull;&bull;</span>
+          <button onClick={() => handlePageChange(pagesList)}>
+            {pagesList}
+          </button>
+        </>
+      )}
     </div>
   );
 };

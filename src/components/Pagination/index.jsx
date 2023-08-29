@@ -1,63 +1,77 @@
 import "./styles.css";
 
-import { useEffect, useState } from "react";
-
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
-const Pagination = ({ pagesList, page, handlePageChange, itemsPerPage }) => {
-  const [pagesListArray, setPagesListArray] = useState([]);
-  const [currentPageRange, setCurrentPageRange] = useState([1, 5]);
-  const [moreThan5Pages, setMoreThan5Pages] = useState(false);
+import { useEffect, useState } from "react";
+
+const Pagination = ({ pagesTotal, page, handlePageChange, itemsPerPage }) => {
+  const [pagesArray, setPagesArray] = useState([]);
 
   useEffect(() => {
-    if (pagesList > 5) {
-      setMoreThan5Pages(true);
-      setPagesListArray(Array.from({ length: 5 }, (_, i) => i + 1));
-    } else {
-      setMoreThan5Pages(false);
-    }
-  }, []);
+    if (page === pagesTotal) return;
 
-  const handlePreviousPageRange = () => {
-    setCurrentPageRange((prevState) => prevState.map((el) => el - 1));
+    let array = [];
+
+    for (let current = page; current < page + 5; current++) {
+      array.push(current);
+    }
+
+    array = array.filter((n) => n < pagesTotal);
+
+    setPagesArray(array);
+  }, [page]);
+
+  const handlePreviousPage = () => {
+    handlePageChange(page - 1);
   };
 
-  const handleNextPageRange = () => {
-    setCurrentPageRange((prevState) => prevState.map((el) => el + 1));
+  const handleNextPage = () => {
+    handlePageChange(page + 1);
   };
 
   return (
     <div className="pages">
-      {currentPageRange[0] > 1 && (
-        <button className="arrow-btn" onClick={() => handlePreviousPageRange()}>
-          <ArrowBackIosNewIcon />
-        </button>
-      )}
-
-      {pagesListArray.map((number) => (
-        <button
-          className={number === page ? "active" : ""}
-          onClick={() => handlePageChange(number)}
-          key={number}
-        >
-          {number}
-        </button>
-      ))}
-
-      {moreThan5Pages && page < pagesList && (
+      {page > 5 && (
         <>
-          {pagesList > 1 && (
-            <button className="arrow-btn" onClick={() => handleNextPageRange()}>
-              <ArrowForwardIosIcon />
-            </button>
-          )}
-          <span>&bull;&bull;&bull;</span>
-          <button onClick={() => handlePageChange(pagesList)}>
-            {pagesList}
+          <button onClick={() => handlePageChange(1)}>Início</button>
+
+          <button className="arrow-btn" onClick={() => handlePreviousPage()}>
+            <ArrowBackIosNewIcon />
           </button>
         </>
       )}
+
+      {pagesArray.map((number) => {
+        return (
+          <button
+            className={number === page ? "active" : undefined}
+            onClick={() => handlePageChange(number)}
+            key={number}
+          >
+            {number}
+          </button>
+        );
+      })}
+
+      {page < pagesTotal && (
+        <button className="arrow-btn" onClick={() => handleNextPage()}>
+          <ArrowForwardIosIcon />
+        </button>
+      )}
+
+      {/* exibe que existem mais itens entre o 5 item da lista de páginas e a última página */}
+      {pagesArray[pagesArray.length - 1] < pagesTotal - 1 && (
+        <span>&bull;&bull;&bull;</span>
+      )}
+
+      {/* botão da última página da lista */}
+      <button
+        className={page === pagesTotal ? "active" : undefined}
+        onClick={() => handlePageChange(pagesTotal)}
+      >
+        {pagesTotal}
+      </button>
     </div>
   );
 };

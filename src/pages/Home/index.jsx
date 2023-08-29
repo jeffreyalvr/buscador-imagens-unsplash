@@ -18,7 +18,7 @@ const Home = () => {
   const [text, setText] = useState("");
   const [searchedText, setSearchedText] = useState("");
   const [page, setPage] = useState(1);
-  const [pagesList, setPagesList] = useState(1);
+  const [pagesTotal, setPagesTotal] = useState(1);
   const [results, setResults] = useState([]);
   const [searchActive, setSearchActive] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -35,7 +35,12 @@ const Home = () => {
 
   useEffect(() => {
     handleAPICall(true);
-  }, [page, itemsPerPage, imgOrientation, imgSort, imgSafe]);
+  }, [page, itemsPerPage]);
+
+  useEffect(() => {
+    handleAPICall(true);
+    handlePageChange(1);
+  }, [imgOrientation, imgSort, imgSafe]);
 
   const handleInputChange = (e) => {
     setText(e.target.value);
@@ -60,7 +65,7 @@ const Home = () => {
         setLoading(false);
         if (response.data.total <= 0) handleNoResults();
 
-        setPagesList(response.data.total_pages);
+        setPagesTotal(response.data.total_pages);
         setResults(response.data.results);
       })
       .catch((err) => console.error(err));
@@ -177,12 +182,12 @@ const Home = () => {
               handleImageSort={handleImageSort}
               handleImageSafe={handleImageSafe}
             />
-            {pagesList > 1 && (
+            {pagesTotal > 1 && (
               <Pagination
                 page={page}
-                pagesList={pagesList}
-                itemsPerPage={itemsPerPage}
+                pagesTotal={pagesTotal}
                 handlePageChange={handlePageChange}
+                itemsPerPage={itemsPerPage}
               />
             )}
           </>

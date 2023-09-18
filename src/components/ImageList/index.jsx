@@ -38,7 +38,11 @@ const ImageList = ({
             >
               Ordenar por
             </Typography>
-            <Select value={img_sort} onChange={handleImageSort}>
+            <Select
+              value={img_sort}
+              onChange={handleImageSort}
+              sx={{ maxHeight: "50px" }}
+            >
               <MenuItem value="popular">relevância</MenuItem>
               <MenuItem value="latest">mais recente</MenuItem>
             </Select>
@@ -55,7 +59,11 @@ const ImageList = ({
             >
               Orientação
             </Typography>
-            <Select value={img_orientation} onChange={handleImageOrientation}>
+            <Select
+              value={img_orientation}
+              onChange={handleImageOrientation}
+              sx={{ maxHeight: "50px" }}
+            >
               <MenuItem value="both">ambas</MenuItem>
               <MenuItem value="portrait">retrato</MenuItem>
               <MenuItem value="landscape">paisagem</MenuItem>
@@ -73,7 +81,11 @@ const ImageList = ({
             >
               Itens por página
             </Typography>
-            <Select value={itemsPerPage} onChange={handleItemsPerPage}>
+            <Select
+              value={itemsPerPage}
+              onChange={handleItemsPerPage}
+              sx={{ maxHeight: "50px" }}
+            >
               <MenuItem value={5}>5</MenuItem>
               <MenuItem value={10}>10</MenuItem>
               <MenuItem value={25}>25</MenuItem>
@@ -92,7 +104,11 @@ const ImageList = ({
             >
               Filtragem NSFW <InfoIcon />
             </Typography>
-            <Select value={img_safe} onChange={handleImageSafe}>
+            <Select
+              value={img_safe}
+              onChange={handleImageSafe}
+              sx={{ maxHeight: "50px" }}
+            >
               <MenuItem value="high">alta</MenuItem>
               <MenuItem value="low">baixa</MenuItem>
             </Select>

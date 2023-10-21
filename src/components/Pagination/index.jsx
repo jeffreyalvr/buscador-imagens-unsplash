@@ -26,20 +26,20 @@ const Pagination = ({ pagesTotal, page, handlePageChange, itemsPerPage }) => {
     handlePageChange(page - 1);
   };
 
-  const handleNextPage = () => {
-    handlePageChange(page + 1);
+  const handleNextPageRange = () => {
+    let maxPageRange = pagesTotal - page > 4 ? 4 : pagesTotal - page;
+
+    handlePageChange(page + maxPageRange);
   };
 
   return (
     <div className="pages">
-      {page > 5 && (
-        <>
-          <button onClick={() => handlePageChange(1)}>Início</button>
+      {page > 5 && <button onClick={() => handlePageChange(1)}>Início</button>}
 
-          <button className="arrow-btn" onClick={() => handlePreviousPage()}>
-            <ArrowBackIosNewIcon />
-          </button>
-        </>
+      {page > 1 && (
+        <button className="arrow-btn" onClick={() => handlePreviousPage()}>
+          <ArrowBackIosNewIcon />
+        </button>
       )}
 
       {pagesArray.map((number) => {
@@ -55,7 +55,7 @@ const Pagination = ({ pagesTotal, page, handlePageChange, itemsPerPage }) => {
       })}
 
       {page < pagesTotal && (
-        <button className="arrow-btn" onClick={() => handleNextPage()}>
+        <button className="arrow-btn" onClick={() => handleNextPageRange()}>
           <ArrowForwardIosIcon />
         </button>
       )}

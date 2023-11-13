@@ -9,34 +9,44 @@ const Pagination = ({ pagesTotal, page, handlePageChange, itemsPerPage }) => {
   const [pagesArray, setPagesArray] = useState([]);
 
   useEffect(() => {
-    if (page === pagesTotal) return;
+    handlePaginationArray(pagesTotal);
+  }, [pagesTotal, itemsPerPage]);
 
-    let array = [];
+  const handlePaginationArray = (totalPaginas) => {
+    let startIndex = page;
+    let endIndex = startIndex + 4;
 
-    for (let current = page; current < page + 5; current++) {
-      array.push(current);
-    }
+    if (page === totalPaginas) endIndex = page;
 
-    array = array.filter((n) => n < pagesTotal);
+    let arr = Array.from(
+      { length: totalPaginas },
+      (_, index) => index + 1
+    ).slice(startIndex - 1, endIndex);
 
-    setPagesArray(array);
-  }, [page]);
+    if (!arrayIgual(arr, pagesArray)) setPagesArray(arr);
+  };
+
+  const arrayIgual = (a, b) => {
+    return JSON.stringify(a) === JSON.stringify(b);
+  };
 
   const handlePreviousPage = () => {
     handlePageChange(page - 1);
   };
 
-  const handleNextPageRange = () => {
-    let maxPageRange = pagesTotal - page > 4 ? 4 : pagesTotal - page;
+  const handleNextPage = () => {
+    handlePageChange(page + 1);
+  };
 
-    handlePageChange(page + maxPageRange);
+  const existePaginasEntrePAPT = (pagesArray, pagesTotal) => {
+    return Math.abs(pagesArray[pagesArray.length - 1] - pagesTotal) > 1;
   };
 
   return (
     <div className="pages">
-      {page > 5 && <button onClick={() => handlePageChange(1)}>Início</button>}
+      {page > 2 && <button onClick={() => handlePageChange(1)}>Início</button>}
 
-      {page > 1 && (
+      {page >= 2 && (
         <button className="arrow-btn" onClick={() => handlePreviousPage()}>
           <ArrowBackIosNewIcon />
         </button>
@@ -47,31 +57,32 @@ const Pagination = ({ pagesTotal, page, handlePageChange, itemsPerPage }) => {
           <button
             className={number === page ? "active" : undefined}
             onClick={() => handlePageChange(number)}
-            key={number}
+            key={number.toString()}
           >
-            {number}
+            {number.toString()}
           </button>
         );
       })}
 
-      {page < pagesTotal && (
-        <button className="arrow-btn" onClick={() => handleNextPageRange()}>
+      {!pagesArray.includes(pagesTotal) &&
+      existePaginasEntrePAPT(pagesArray, pagesTotal) ? (
+        <button className="arrow-btn" onClick={() => handleNextPage()}>
           <ArrowForwardIosIcon />
         </button>
-      )}
+      ) : undefined}
 
-      {/* exibe que existem mais itens entre o 5 item da lista de páginas e a última página */}
-      {pagesArray[pagesArray.length - 1] < pagesTotal - 1 && (
+      {existePaginasEntrePAPT(pagesArray, pagesTotal) && (
         <span>&bull;&bull;&bull;</span>
       )}
 
-      {/* botão da última página da lista */}
-      <button
-        className={page === pagesTotal ? "active" : undefined}
-        onClick={() => handlePageChange(pagesTotal)}
-      >
-        {pagesTotal}
-      </button>
+      {!pagesArray.includes(pagesTotal) && (
+        <button
+          className={page === pagesTotal ? "active" : undefined}
+          onClick={() => handlePageChange(pagesTotal)}
+        >
+          {pagesTotal}
+        </button>
+      )}
     </div>
   );
 };

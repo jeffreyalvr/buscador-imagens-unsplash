@@ -38,6 +38,10 @@ const Home = () => {
   }, [page, itemsPerPage]);
 
   useEffect(() => {
+    setPage(1);
+  }, [itemsPerPage]);
+
+  useEffect(() => {
     handleAPICall(true);
     handlePageChange(1);
   }, [imgOrientation, imgSort, imgSafe]);

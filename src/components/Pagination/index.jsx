@@ -31,16 +31,13 @@ const Pagination = ({ pagesTotal, page, handlePageChange, itemsPerPage }) => {
   };
 
   const handlePreviousPageArray = (lastPageIndex) => {
-    let pageIndex = 1;
-    if (lastPageIndex - 4 < 1) pageIndex = 1;
-    else pageIndex = lastPageIndex - 4;
+    let pageIndex = lastPageIndex - 4 < 1 ? 1 : lastPageIndex - 4;
     handlePageChange(pageIndex);
   };
 
   const handleNextPageArray = (lastPageIndex) => {
-    let pageIndex = 1;
-    if (lastPageIndex + 4 > pagesTotal) pageIndex = pagesTotal;
-    else pageIndex = lastPageIndex + 4;
+    let pageIndex =
+      lastPageIndex + 4 >= pagesTotal ? pagesTotal : lastPageIndex + 4;
     handlePageChange(pageIndex);
   };
 

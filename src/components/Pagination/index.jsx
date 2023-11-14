@@ -30,12 +30,18 @@ const Pagination = ({ pagesTotal, page, handlePageChange, itemsPerPage }) => {
     return JSON.stringify(a) === JSON.stringify(b);
   };
 
-  const handlePreviousPage = () => {
-    handlePageChange(page - 1);
+  const handlePreviousPageArray = (lastPageIndex) => {
+    let pageIndex = 1;
+    if (lastPageIndex - 4 < 1) pageIndex = 1;
+    else pageIndex = lastPageIndex - 4;
+    handlePageChange(pageIndex);
   };
 
-  const handleNextPage = () => {
-    handlePageChange(page + 1);
+  const handleNextPageArray = (lastPageIndex) => {
+    let pageIndex = 1;
+    if (lastPageIndex + 4 > pagesTotal) pageIndex = pagesTotal;
+    else pageIndex = lastPageIndex + 4;
+    handlePageChange(pageIndex);
   };
 
   const existePaginasEntrePAPT = (pagesArray, pagesTotal) => {
@@ -47,7 +53,10 @@ const Pagination = ({ pagesTotal, page, handlePageChange, itemsPerPage }) => {
       {page > 2 && <button onClick={() => handlePageChange(1)}>Início</button>}
 
       {page >= 2 && (
-        <button className="arrow-btn" onClick={() => handlePreviousPage()}>
+        <button
+          className="arrow-btn"
+          onClick={() => handlePreviousPageArray(page)}
+        >
           <ArrowBackIosNewIcon />
         </button>
       )}
@@ -57,7 +66,7 @@ const Pagination = ({ pagesTotal, page, handlePageChange, itemsPerPage }) => {
           <button
             className={number === page ? "active" : undefined}
             onClick={() => handlePageChange(number)}
-            key={number.toString()}
+            key={number}
           >
             {number.toString()}
           </button>
@@ -66,7 +75,7 @@ const Pagination = ({ pagesTotal, page, handlePageChange, itemsPerPage }) => {
 
       {!pagesArray.includes(pagesTotal) &&
       existePaginasEntrePAPT(pagesArray, pagesTotal) ? (
-        <button className="arrow-btn" onClick={() => handleNextPage()}>
+        <button className="arrow-btn" onClick={() => handleNextPageArray(page)}>
           <ArrowForwardIosIcon />
         </button>
       ) : undefined}

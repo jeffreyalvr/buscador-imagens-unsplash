@@ -50,7 +50,7 @@ const Home = () => {
     setText(e.target.value);
   };
 
-  const handleAPICall = (isSameTopic) => {
+  const handleAPICall = async (isSameTopic) => {
     if (!searchActive) return;
 
     setLoading(true);
@@ -61,18 +61,24 @@ const Home = () => {
       `&page=${page}` +
       `&order_by=${imgSort}` +
       `&content_filter=${imgSafe}`;
-    api
-      .get(
-        imgOrientation !== "both" ? url + `&orientation=${imgOrientation}` : url
-      )
-      .then((response) => {
-        setLoading(false);
-        if (response.data.total <= 0) handleNoResults();
 
-        setPagesTotal(response.data.total_pages);
-        setResults(response.data.results);
-      })
-      .catch((err) => console.error(err));
+    try {
+      const response = await api.get(
+        imgOrientation !== "both" ? url + `&orientation=${imgOrientation}` : url
+      );
+
+      setLoading(false);
+
+      if (response.data.total <= 0) {
+        handleNoResults();
+      }
+
+      setPagesTotal(response.data.total_pages);
+      setResults(response.data.results);
+      console.log(page);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   const handleKeyDown = (e) => {

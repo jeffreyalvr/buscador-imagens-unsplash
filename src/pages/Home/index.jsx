@@ -50,15 +50,13 @@ const Home = () => {
     setText(e.target.value);
   };
 
-  const handleAPICall = async ({ isSameTopic }) => {
-    console.log("search active: " + hasCurrentSearch);
-
+  const handleAPICall = async ({ isSameTopic, resetPage }) => {
     setLoading(true);
 
     const url =
       `/photos?query=${isSameTopic ? searchedText : text}` +
       `&per_page=${itemsPerPage}` +
-      `&page=${page}` +
+      `&page=${resetPage || page}` +
       `&order_by=${imgSort}` +
       `&content_filter=${imgSafe}`;
 
@@ -71,7 +69,7 @@ const Home = () => {
 
       if (response.data.total <= 0) {
         handleNoResults();
-        console.log("sem resultados");
+        console.log(response.data.results);
       }
 
       setPagesTotal(response.data.total_pages);
@@ -99,7 +97,7 @@ const Home = () => {
     handleSearchStatus(true);
     handleShowToast(false);
     handlePageChange(1);
-    handleAPICall({ isSameTopic: false });
+    handleAPICall({ isSameTopic: false, resetPage: true });
   };
 
   const handleSearchStatus = (state) => {

@@ -86,7 +86,7 @@ const Pagination = ({ pagesTotal, page, handlePageChange, itemsPerPage }) => {
           className={page === pagesTotal ? "active" : undefined}
           onClick={() => handlePageChange(pagesTotal)}
         >
-          {pagesTotal}
+          {pagesTotal.toString()}
         </button>
       )}
     </div>

@@ -21,7 +21,7 @@ const Header = ({
   handleSearch,
   handleClearSearch,
   handleKeyDown,
-  searchActive,
+  hasCurrentSearch,
 }) => {
   return (
     <header>
@@ -87,7 +87,7 @@ const Header = ({
           </Button>
         </Box>
 
-        {searchActive && (
+        {hasCurrentSearch && (
           <div className="search-container">
             <label>Você pesquisou por:</label>
             <Button

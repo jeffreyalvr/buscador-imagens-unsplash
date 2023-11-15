@@ -20,7 +20,7 @@ const Home = () => {
   const [page, setPage] = useState(1);
   const [pagesTotal, setPagesTotal] = useState(1);
   const [results, setResults] = useState([]);
-  const [searchActive, setSearchActive] = useState(false);
+  const [hasCurrentSearch, setHasCurrentSearch] = useState(false);
   const [loading, setLoading] = useState(false);
   const [toastVisibility, setToastVisibility] = useState(false);
   const [toastText, setToastText] = useState("");
@@ -30,28 +30,28 @@ const Home = () => {
   const [imgSafe, setImgSafe] = useState("high");
 
   useEffect(() => {
-    handleAPICall({ isSameTopic: false });
-  }, [searchActive]);
+    if (!hasCurrentSearch) return;
 
-  useEffect(() => {
     handleAPICall({ isSameTopic: true });
   }, [page, itemsPerPage]);
 
   useEffect(() => {
-    handlePageChange(1);
-  }, [itemsPerPage]);
+    if (!hasCurrentSearch) return;
 
-  useEffect(() => {
     handleAPICall({ isSameTopic: true });
     handlePageChange(1);
   }, [imgOrientation, imgSort, imgSafe]);
+
+  useEffect(() => {
+    handlePageChange(1);
+  }, [itemsPerPage]);
 
   const handleInputChange = (e) => {
     setText(e.target.value);
   };
 
   const handleAPICall = async ({ isSameTopic }) => {
-    if (!searchActive) return;
+    console.log("search active: " + hasCurrentSearch);
 
     setLoading(true);
 
@@ -71,10 +71,12 @@ const Home = () => {
 
       if (response.data.total <= 0) {
         handleNoResults();
+        console.log("sem resultados");
       }
 
       setPagesTotal(response.data.total_pages);
       setResults(response.data.results);
+      console.log(response.data.results);
     } catch (err) {
       console.error(err);
     }
@@ -101,7 +103,7 @@ const Home = () => {
   };
 
   const handleSearchStatus = (state) => {
-    setSearchActive(state);
+    setHasCurrentSearch(state);
   };
 
   const handleNoResults = () => {
@@ -166,7 +168,7 @@ const Home = () => {
         handleSearch={handleSearch}
         handleKeyDown={handleKeyDown}
         handleClearSearch={handleClearSearch}
-        searchActive={searchActive}
+        hasCurrentSearch={hasCurrentSearch}
         searchedText={searchedText}
         text={text}
       />

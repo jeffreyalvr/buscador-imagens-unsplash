@@ -30,19 +30,19 @@ const Home = () => {
   const [imgSafe, setImgSafe] = useState("high");
 
   useEffect(() => {
-    handleAPICall();
+    handleAPICall({ isSameTopic: false });
   }, [searchActive]);
 
   useEffect(() => {
-    handleAPICall(true);
+    handleAPICall({ isSameTopic: true });
   }, [page, itemsPerPage]);
 
   useEffect(() => {
-    setPage(1);
+    handlePageChange(1);
   }, [itemsPerPage]);
 
   useEffect(() => {
-    handleAPICall(true);
+    handleAPICall({ isSameTopic: true });
     handlePageChange(1);
   }, [imgOrientation, imgSort, imgSafe]);
 
@@ -50,7 +50,7 @@ const Home = () => {
     setText(e.target.value);
   };
 
-  const handleAPICall = async (isSameTopic) => {
+  const handleAPICall = async ({ isSameTopic }) => {
     if (!searchActive) return;
 
     setLoading(true);
@@ -75,7 +75,6 @@ const Home = () => {
 
       setPagesTotal(response.data.total_pages);
       setResults(response.data.results);
-      console.log(page);
     } catch (err) {
       console.error(err);
     }
@@ -98,7 +97,7 @@ const Home = () => {
     handleSearchStatus(true);
     handleShowToast(false);
     handlePageChange(1);
-    handleAPICall();
+    handleAPICall({ isSameTopic: false });
   };
 
   const handleSearchStatus = (state) => {

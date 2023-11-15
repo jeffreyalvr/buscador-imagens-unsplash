@@ -69,12 +69,10 @@ const Home = () => {
 
       if (response.data.total <= 0) {
         handleNoResults();
-        console.log(response.data.results);
       }
 
       setPagesTotal(response.data.total_pages);
       setResults(response.data.results);
-      console.log(response.data.results);
     } catch (err) {
       console.error(err);
     }
